@@ -1,73 +1,165 @@
 # 🤖 The Digital Auditor: AI-Driven Recruitment Screening
 
-[](https://www.python.org/)
-[](https://scikit-learn.org/)
-[](https://en.wikipedia.org/wiki/People_analytics)
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange?logo=scikit-learn)
+![HR Analytics](https://img.shields.io/badge/Domain-HR%20Analytics-green)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 
-## 💼 Case Scenario: Scaling Talent Acquisition
+---
 
-In high-volume recruitment, HR teams are often overwhelmed by thousands of applications. Manual screening is not only slow but also prone to "Decision Fatigue," where the 100th resume is reviewed with less consistency than the 1st.
+## 📋 Executive Summary
 
-**The Problem:** A growing organization needs to automate the initial 80% of resume screening to ensure that recruiters only spend their time interviewing high-potential candidates.
+High-volume recruitment is one of the most resource-intensive functions in modern HR. Talent acquisition teams routinely receive thousands of applications per vacancy, spending a disproportionate share of recruiter bandwidth on initial screening — work that is repetitive, inconsistent, and vulnerable to unconscious bias.
 
-**The Solution:** This project implements a **Decision Tree Classifier** that acts as a **Digital Auditor**. It evaluates candidates based on objective metrics—Skills, Experience, and Education—to provide an instant, unbiased "Shortlist" recommendation.
+**This project delivers a Decision Tree-based Digital Auditor** that automates the initial screening layer of the recruitment funnel. By evaluating candidates against objective, pre-defined hiring thresholds, the system enables HR professionals to direct their expertise where it matters most: engaging, assessing, and securing top talent.
 
------
+> **Business Impact:** Based on the 1,500-record dataset used in this project, automating 80% of initial screening saves an estimated **200+ recruiter-hours per hiring cycle**, assuming a conservative 10-minute manual screening time per resume.
 
-## 🚀 Key Business Features
+---
 
-  * ⚖️ **Bias Mitigation**: By focusing on hard skills and tenure, the model ignores subjective "gut feelings," ensuring every candidate is judged on the same criteria.
-  * 📈 **Efficiency at Scale**: Capable of processing thousands of candidate profiles in seconds, reducing the "Time-to-Hire" metric significantly.
-  * 🧠 **Explainable AI (XAI)**: Unlike "black-box" models, this Auditor provides clear reasoning for every rejection or approval, essential for HR compliance and candidate feedback.
+## 💼 The Business Problem
 
------
+| Pain Point | Operational Impact |
+|---|---|
+| Manual screening at scale | Recruiter burnout and delayed time-to-hire |
+| Inconsistent evaluation criteria | Variable candidate quality reaching final rounds |
+| Unconscious bias in early filtering | Legal and reputational risk; missed talent |
+| No audit trail for rejection decisions | Compliance gaps in regulated industries |
 
-## 📊 Analytics & Visual Insights
+**The core challenge:** A growing organisation needs to standardise and accelerate the initial 80% of its resume screening process — without sacrificing candidate quality or introducing new sources of bias.
 
-### **1. Strategic Hiring Drivers**
+---
 
-This visualization identifies which candidate attributes are actually driving the hiring decision. In this model, **Technical Skill Scores** and **Years of Experience** carry the most weight, proving that the AI is aligned with professional merit.
+## ✅ The Solution: A Rules-Based AI Auditor
 
-### **2. Model Audit: Accuracy vs. Actual Hiring**
+This project implements a **Decision Tree Classifier** trained on 1,500 candidate records across 11 attributes. The model acts as a consistent, explainable first-pass screener that applies the same hiring logic to every applicant, every time.
 
-The following **Decision Matrix** validates the reliability of the Auditor. By comparing AI predictions against historical top-performer data, we ensure the system identifies "A-Player" talent with high precision while minimizing the risk of "False Rejections."
+**Core Shortlisting Logic:**
+- Candidates with **more than 5 years of experience** AND a **Technical Skill Score above 75** are flagged for shortlisting.
+- All other candidates are automatically rejected at the screening stage.
+- Decisions are generated with a **confidence percentage**, giving recruiters a transparency layer on every output.
 
------
+---
 
-## 🛠️ Technical Implementation
+## 🎯 Key HR & Business Features
 
-  * **Dataset**: 32,000+ candidate records (Experience, Age, Education, Skill Ratings).
-  * **Algorithm**: **Decision Tree Classifier** (chosen for its "Flowchart-like" transparency for HR stakeholders).
-  * **Logic Engine**: Implemented custom hiring thresholds to mirror organizational standards.
+### ⚖️ Bias Mitigation by Design
+The model is built to evaluate only **Technical Skill Score** and **Years of Experience** — the two highest-signal predictors of role readiness. Applicant Age and Education Level carry near-zero weight in the model's logic (as confirmed by the feature importance analysis below), reducing the risk of the proxy discrimination that often plagues unstructured screening.
 
------
+### 📈 Recruiter Efficiency at Scale
+The system processes thousands of candidate profiles in seconds. By routing only high-potential candidates to human review, it protects recruiter time for tasks that require human judgment: structured interviews, culture-fit assessment, and offer negotiation.
+
+### 🧠 Explainable AI (XAI) for Stakeholder Confidence
+Unlike black-box models, a Decision Tree provides a clear, auditable reasoning path for every decision. HR leaders and compliance teams can trace exactly why a candidate was shortlisted or rejected — a critical requirement in jurisdictions with employment law protections around automated decision-making.
+
+### 🔄 Bias Audit Built In
+A dedicated age-group bias check is built into the pipeline. Shortlisting rates are calculated separately for Junior (18–30), Mid (30–45), and Senior (45–60) applicant cohorts. Comparable rates across groups indicate the model is not systematically disadvantaging any age segment — an important governance checkpoint.
+
+---
+
+## 📊 Analytical Insights
+
+### Visual 1: What Drives the Shortlisting Decision?
+
+![Hiring Logic: Eligibility Factors](./Eligibility_Factors.png)
+
+This chart displays the **relative influence of each candidate attribute** on the shortlisting outcome. Technical Skill Score accounts for approximately **62% of the model's decision weight**, followed by Years of Experience at approximately **38%**. Applicant Age and Education Level register effectively zero influence — confirming that the model is screening on merit-based criteria rather than demographic proxies.
+
+**HR Implication:** This chart can be shared directly with hiring managers and DEI leads as evidence that the screening criteria are skills-first and experience-based.
+
+---
+
+### Visual 2: Model Reliability Audit — AI Prediction vs. Actual HR Decision
+
+![Model Audit: Confusion Matrix](./Confusion_Matrix.png)
+
+This matrix benchmarks the AI's predictions against **verified historical HR decisions** on a held-out test set (20% of the data, never seen by the model during training).
+
+| Metric | Result |
+|---|---|
+| True Rejections (correct) | **246 / 246** |
+| True Shortlistings (correct) | **54 / 54** |
+| False Positives (wrong shortlists) | **0** |
+| False Negatives (missed candidates) | **0** |
+| **Overall Accuracy** | **100%** |
+
+The model achieves perfect agreement with historical HR decisions on the test set. This reflects that the hiring logic applied (experience > 5 years AND skill score > 75) is a precise, deterministic rule — the Decision Tree has learned to replicate it exactly. For production deployment, this threshold should be reviewed periodically to ensure it continues to reflect the organisation's evolving hiring standards.
+
+---
+
+## 🛠️ Technical Architecture
+
+| Component | Detail |
+|---|---|
+| **Dataset** | 1,500 candidate records, 11 attributes |
+| **Algorithm** | Decision Tree Classifier (`max_depth=3`, `criterion='entropy'`) |
+| **Train / Test Split** | 80% training, 20% holdout evaluation |
+| **Missing Data Handling** | Median imputation via `SimpleImputer` |
+| **Model Export** | Serialised via `joblib` for deployment (`hr_recruitment_model.pkl`) |
+| **Environment** | Google Colab (Python 3.x) |
+
+**Feature Set Used for Prediction:**
+- `Age` — Applicant age in years
+- `ExperienceYears` — Total years of relevant work experience
+- `EducationLevel` — Encoded education tier (0 = Undergraduate, 1 = Graduate, 2 = Postgraduate)
+- `SkillScore` — Standardised technical skills assessment score (0–100)
+
+---
 
 ## 📁 Repository Structure
 
-```text
-├── recruitment_data.csv        # Secure Candidate Data (32K+ Records)
-├── HR_Recruitment_AI.ipynb     # End-to-End Screening Pipeline
-├── Eligibility_Factors.png     # Visual: Feature Importance Analysis
-├── Confusion_Matrix.png        # Visual: Model Reliability Audit
-└── README.md                   # Project Documentation
+```
+├── recruitment_data.csv          # Candidate dataset (1,500 records, 11 attributes)
+├── HR_Recruitment_Automation.ipynb  # End-to-end screening pipeline (Colab notebook)
+├── Eligibility_Factors.png       # Feature importance visualisation
+├── Confusion_Matrix.png          # Model reliability audit chart
+└── README.md                     # Project documentation
 ```
 
------
+---
 
-## 🎯 Strategic Objective
+## 🚀 Getting Started
 
-  * **Reduce Operational Cost**: Automate repetitive manual screening tasks.
-  * **Standardize Quality**: Ensure a consistent "Hiring Bar" across all departments.
-  * **Ethical Governance**: Build a transparent, auditable bridge between Data Science and Human Resources.
+**1. Clone the repository**
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+```
 
-## 🌍 Domain
+**2. Open the notebook in Google Colab**
+Upload `HR_Recruitment_Automation.ipynb` to [colab.research.google.com](https://colab.research.google.com) and run cells sequentially.
 
-**People Analytics | Talent Acquisition | Ethical AI**
+**3. Upload the dataset**
+When prompted, upload `recruitment_data.csv` using the Colab file uploader widget.
 
------
+**4. Screen a new candidate**
+Modify the values in the final inference cell to evaluate any new applicant profile:
+```python
+# [Age, ExperienceYears, EducationLevel, SkillScore]
+new_applicant = np.array([[30, 7, 2, 85]])
+```
 
-### **How to Use This Project**
+---
 
-1.  **Inference**: Use the `predict()` function in the notebook to screen new batch uploads.
-2.  **Audit**: Run the **Bias Check** cell to ensure the model remains fair across different age demographics.
-3.  **Deploy**: The model is ready to be integrated into an existing **ATS (Applicant Tracking System)**.
+## ⚠️ Governance & Responsible Use
+
+This tool is designed as a **decision-support system**, not a replacement for human judgment. The following governance principles are recommended for responsible deployment:
+
+1. **Human oversight is mandatory.** All AI-generated shortlisting decisions should be reviewed by a qualified HR professional before candidate communication.
+2. **Threshold review cadence.** The shortlisting criteria (experience > 5 years, skill score > 75) should be re-validated against actual hire performance data at least annually.
+3. **Bias monitoring.** The age-group bias audit should be run on every new batch of applicants and reviewed by the DEI lead.
+4. **Candidate transparency.** In jurisdictions covered by GDPR, the EU AI Act, or equivalent legislation, candidates have rights regarding automated decision-making. Consult your legal team before production rollout.
+
+---
+
+## 🎯 Strategic Objectives
+
+| Objective | How This Project Delivers |
+|---|---|
+| Reduce cost-per-hire | Automates the highest-volume, lowest-value screening activity |
+| Standardise hiring quality | Applies an identical, documented criteria set to every applicant |
+| Strengthen compliance posture | Full audit trail and explainable decisions for every outcome |
+| Support DEI commitments | Skills-first model architecture minimises demographic bias vectors |
+
+---
+
+*Built with Python · scikit-learn · pandas · seaborn · Google Colab*
